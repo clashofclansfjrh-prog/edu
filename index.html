@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="de">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Arbeitsblatt – tagesschau in Einfacher Sprache</title>
+  <title>Guía Interactiva de Comprensión de Lectura y Análisis</title>
   <style>
     :root{
       --navy:#17365d;--blue:#2f75b5;--teal:#21897e;--gold:#f1c75b;
@@ -53,8 +53,6 @@
     details{margin-top:25px;border:1px solid #e0b84c;border-radius:9px;background:#fff9e8;padding:15px}
     summary{cursor:pointer;font-weight:800;color:var(--navy)}
     .teacher{margin-top:13px}
-    .source{margin-top:28px;color:var(--muted);font-size:13px}
-    .source a{color:var(--blue)}
     @media(max-width:760px){
       header,.content{padding:30px 20px}
       h1{font-size:30px}.intro,.meta,.topic-list{grid-template-columns:1fr}
@@ -73,227 +71,230 @@
 </head>
 <body>
   <div class="toolbar">
-    <strong>TAGESSCHAU · INTERAKTIVES ARBEITSBLATT</strong>
+    <strong>GUÍA INTERACTIVA DE ESPAÑOL · LENGUA Y COMUNICACIÓN</strong>
     <div>
-      <button class="secondary" type="button" onclick="saveWork()">Speichern</button>
-      <button class="secondary" type="button" onclick="window.print()">Drucken / PDF</button>
-      <button type="button" onclick="checkAnswers()">Auswerten & Senden</button>
+      <button class="secondary" type="button" onclick="saveWork()">Guardar borrador</button>
+      <button class="secondary" type="button" onclick="window.print()">Imprimir / PDF</button>
+      <button type="button" onclick="checkAnswers()">Evaluar y Enviar</button>
     </div>
   </div>
 
   <main>
     <header>
-      <div class="eyebrow">Hör-Seh-Verstehen · Niveau A2–B1</div>
-      <h1>tagesschau in Einfacher Sprache</h1>
-      <p>Nachrichten verstehen, zusammenfassen und darüber sprechen</p>
+      <div class="eyebrow">COMPRENSIÓN LECTORA Y ANÁLISIS CRÍTICO</div>
+      <h1>Comprensión de Textos y Análisis de Noticias</h1>
+      <p>Aprende a analizar medios, identificar ideas principales y argumentar tu opinión</p>
       <div class="meta">
-        <label>Name<input id="studentName" type="text" autocomplete="name"></label>
-        <label>Datum<input id="date" type="text" placeholder="TT.MM.JJJJ"></label>
+        <label>Nombre del Estudiante<input id="studentName" type="text" autocomplete="name" placeholder="Tu nombre completo"></label>
+        <label>Fecha<input id="date" type="text" placeholder="DD/MM/AAAA"></label>
       </div>
     </header>
 
     <div class="content">
       <div class="intro">
         <div class="card">
-          <h3>Lernziele</h3>
-          <p>Ich kann die Themen einer Nachrichtensendung erkennen, wichtige Informationen notieren,
-            eine Nachricht zusammenfassen und meine Meinung äußern.</p>
-          <a class="button" href="https://www.tagesschau.de/tagesschau_in_einfacher_sprache/tse-1352.html"
-             target="_blank" rel="noopener">Video öffnen</a>
+          <h3>Objetivos de Aprendizaje</h3>
+          <p>Identificar el vocabulario clave en un texto periodístico, reconocer ideas principales y secundarias, sintetizar información e integrar opinión crítica con argumentos.</p>
         </div>
         <div class="score-card">
-          <div>Automatische Aufgaben</div>
-          <div id="score">– / 27</div>
-          <small>Aufgaben 1, 3, 4 und 5</small>
+          <div>Ejercicios Autoevaluados</div>
+          <div id="score">– / 25</div>
+          <small>Ejercicios 1, 3, 4 y 5</small>
         </div>
       </div>
 
+      <!-- SECCIÓN 1 -->
       <section id="sec1">
-        <h2>1. Vor dem Sehen: Wortschatz</h2>
-        <p class="instruction">Wähle für jedes Wort die passende Erklärung.</p>
+        <h2>1. Vocabulario y Lenguaje Periodístico</h2>
+        <p class="instruction">Relaciona cada término con su definición correcta eligiendo la opción correspondiente.</p>
         <div class="table-wrap"><table>
-          <thead><tr><th>Wort</th><th>Erklärung</th></tr></thead>
+          <thead><tr><th>Término</th><th>Definición</th></tr></thead>
           <tbody>
-            <tr><td>der Vorsitzende</td><td><select data-answer="c"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
-            <tr><td>die Klage</td><td><select data-answer="e"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
-            <tr><td>der Angriff</td><td><select data-answer="b"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
-            <tr><td>entlassen werden</td><td><select data-answer="a"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
-            <tr><td>die sozialen Medien</td><td><select data-answer="d"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
-            <tr><td>sich mit etwas befassen</td><td><select data-answer="f"><option value="">Bitte wählen</option><option value="a">Eine Person verliert ihre Position.</option><option value="b">Ein militärischer Angriff</option><option value="c">Eine Person, die eine Gruppe leitet</option><option value="d">Internetplattformen</option><option value="e">Ein Verfahren vor Gericht</option><option value="f">Sich mit einem Thema beschäftigen</option></select></td></tr>
+            <tr><td>1. Editorial</td><td><select data-answer="c"><option value="">Selecciona...</option><option value="a">Noticia o acontecimiento de última hora.</option><option value="b">Persona que realiza preguntas en una entrevista.</option><option value="c">Artículo que expresa la opinión oficial del medio.</option><option value="d">Texto con la síntesis de un libro o película.</option><option value="e">Origen verificado de los datos de una noticia.</option><option value="f">Información parcial u orientada hacia una postura.</option></select></td></tr>
+            <tr><td>2. Sesgo informativo</td><td><select data-answer="f"><option value="">Selecciona...</option><option value="a">Noticia o acontecimiento de última hora.</option><option value="b">Persona que realiza preguntas en una entrevista.</option><option value="c">Artículo que expresa la opinión oficial del medio.</option><option value="d">Texto con la síntesis de un libro o película.</option><option value="e">Origen verificado de los datos de una noticia.</option><option value="f">Información parcial u orientada hacia una postura.</option></select></td></tr>
+            <tr><td>3. Primicia</td><td><select data-answer="a"><option value="">Selecciona...</option><option value="a">Noticia o acontecimiento de última hora.</option><option value="b">Persona que realiza preguntas en una entrevista.</option><option value="c">Artículo que expresa la opinión oficial del medio.</option><option value="d">Texto con la síntesis de un libro o película.</option><option value="e">Origen verificado de los datos de una noticia.</option><option value="f">Información parcial u orientada hacia una postura.</option></select></td></tr>
+            <tr><td>4. Fuente confiable</td><td><select data-answer="e"><option value="">Selecciona...</option><option value="a">Noticia o acontecimiento de última hora.</option><option value="b">Persona que realiza preguntas en una entrevista.</option><option value="c">Artículo que expresa la opinión oficial del medio.</option><option value="d">Texto con la síntesis de un libro o película.</option><option value="e">Origen verificado de los datos de una noticia.</option><option value="f">Información parcial u orientada hacia una postura.</option></select></td></tr>
+            <tr><td>5. Reseña</td><td><select data-answer="d"><option value="">Selecciona...</option><option value="a">Noticia o acontecimiento de última hora.</option><option value="b">Persona que realiza preguntas en una entrevista.</option><option value="c">Artículo que expresa la opinión oficial del medio.</option><option value="d">Texto con la síntesis de un libro o película.</option><option value="e">Origen verificado de los datos de una noticia.</option><option value="f">Información parcial u orientada hacia una postura.</option></select></td></tr>
           </tbody>
         </table></div>
         <div class="feedback"></div>
       </section>
 
+      <!-- SECCIÓN 2 -->
       <section id="sec2">
-        <h2>2. Vor dem Sehen: Vermutungen</h2>
-        <p class="instruction">Schreibe zu drei Themen eine Vermutung.</p>
-        <input class="answer-line" type="text" data-save placeholder="Ich glaube, dass …">
-        <input class="answer-line" type="text" data-save placeholder="Vielleicht …">
-        <input class="answer-line" type="text" data-save placeholder="Wahrscheinlich …">
+        <h2>2. Hipótesis Previa a la Lectura</h2>
+        <p class="instruction">Antes de leer o analizar una noticia, escribe 3 hipótesis sobre la importancia de verificar la información en redes sociales.</p>
+        <input class="answer-line" type="text" data-save placeholder="1. Yo creo que las personas comparten noticias falsas porque…">
+        <input class="answer-line" type="text" data-save placeholder="2. Es posible que el impacto de una noticia no verificada sea…">
+        <input class="answer-line" type="text" data-save placeholder="3. Probablemente la solución para combatir la desinformación es…">
       </section>
 
+      <!-- SECCIÓN 3 -->
       <section id="sec3">
-        <h2>3. Erstes Sehen: Welche Themen kommen vor?</h2>
-        <p class="instruction">Kreuze alle Themen an, die in der Sendung vorkommen.</p>
+        <h2>3. Identificación de Elementos de la Noticia</h2>
+        <p class="instruction">Marca todos los elementos que forman parte de la estructura formal de una noticia periodística.</p>
         <div class="topic-list">
-          <label class="choice"><input type="checkbox" data-correct="true">Politik in Deutschland</label>
-          <label class="choice"><input type="checkbox" data-correct="true">Corona-Masken und ein Gerichtsverfahren</label>
-          <label class="choice"><input type="checkbox" data-correct="false">Ein Fußballspiel</label>
-          <label class="choice"><input type="checkbox" data-correct="true">Neue Angriffe im Krieg gegen Iran</label>
-          <label class="choice"><input type="checkbox" data-correct="true">Die ukrainische Armee</label>
-          <label class="choice"><input type="checkbox" data-correct="true">Soziale Medien in Frankreich</label>
-          <label class="choice"><input type="checkbox" data-correct="false">Eine neue Musikgruppe</label>
-          <label class="choice"><input type="checkbox" data-correct="true">Das Wetter</label>
+          <label class="choice"><input type="checkbox" data-correct="true">Titular o Título principal</label>
+          <label class="choice"><input type="checkbox" data-correct="true">Bajada o Subtítulo</label>
+          <label class="choice"><input type="checkbox" data-correct="false">Rima consonante</label>
+          <label class="choice"><input type="checkbox" data-correct="true">Entradilla o Lead (Primer párrafo)</label>
+          <label class="choice"><input type="checkbox" data-correct="true">Cuerpo de la noticia</label>
+          <label class="choice"><input type="checkbox" data-correct="false">Acotaciones dramáticas</label>
+          <label class="choice"><input type="checkbox" data-correct="true">Fotografía y epígrafe</label>
+          <label class="choice"><input type="checkbox" data-correct="false">Moraleja final</label>
         </div>
         <div class="feedback"></div>
       </section>
 
+      <!-- SECCIÓN 4 -->
       <section id="sec4">
-        <h2>4. Erstes Sehen: Reihenfolge</h2>
-        <p class="instruction">Trage die richtige Reihenfolge von 1 bis 6 ein.</p>
+        <h2>4. Estructura y Ordenación Lógica</h2>
+        <p class="instruction">Ordena la secuencia clásica de la estructura periodística de la "Pirámide Invertida" (del 1 al 5).</p>
         <div class="table-wrap"><table>
-          <thead><tr><th>Thema</th><th>Reihenfolge</th></tr></thead>
+          <thead><tr><th>Elemento</th><th>Orden (1 al 5)</th></tr></thead>
           <tbody>
-            <tr><td>Das Wetter</td><td><select data-answer="6"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
-            <tr><td>Soziale Medien in Frankreich</td><td><select data-answer="5"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
-            <tr><td>Die ukrainische Armee</td><td><select data-answer="4"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
-            <tr><td>Corona-Masken und Gericht</td><td><select data-answer="2"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
-            <tr><td>Die Unionsfraktion und Frei</td><td><select data-answer="1"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
-            <tr><td>Neue Angriffe im Krieg gegen Iran</td><td><select data-answer="3"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></td></tr>
+            <tr><td>Información secundaria y contexto general</td><td><select data-answer="4"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Hecho principal / Lo más importante (Lead o Entradilla)</td><td><select data-answer="1"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Detalles complementarios o de menor relevancia</td><td><select data-answer="5"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Desarrollo del hecho y explicaciones clave</td><td><select data-answer="2"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Declaraciones o testimonios de involucrados</td><td><select data-answer="3"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
           </tbody>
         </table></div>
         <div class="feedback"></div>
       </section>
 
+      <!-- SECCIÓN 5 -->
       <section id="sec5">
-        <h2>5. Zweites Sehen: Richtig oder falsch?</h2>
-        <p class="instruction">Wähle die passende Antwort.</p>
+        <h2>5. Análisis de Veracidad (Verdadero o Falso)</h2>
+        <p class="instruction">Lee cada afirmación sobre los medios de comunicación y selecciona V (Verdadero) o F (Falso).</p>
         <div class="table-wrap"><table>
-          <thead><tr><th>Aussage</th><th>Antwort</th></tr></thead>
+          <thead><tr><th>Afirmación</th><th>Respuesta</th></tr></thead>
           <tbody>
-            <tr><td>Frei soll Vorsitzender der Unionsfraktion werden.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>Ein Gericht beschäftigt sich mit einer Klage zu Corona-Masken.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>Im Krieg gegen Iran gibt es keine neuen Angriffe.</td><td><select data-answer="F"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>Der Chef der ukrainischen Armee wurde entlassen.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>In Frankreich geht es um eine Altersgrenze für soziale Medien.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>Die Altersgrenze in Frankreich soll bei 18 Jahren liegen.</td><td><select data-answer="F"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
-            <tr><td>Am Ende der Sendung kommt das Wetter.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
+            <tr><td>Una noticia objetiva debe separar los hechos de la opinión del periodista.</td><td><select data-answer="V"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>Las redes sociales siempre garantizan la veracidad de sus contenidos antes de publicarlos.</td><td><select data-answer="F"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>Las 6 preguntas básicas del periodismo son: ¿Qué?, ¿Quién?, ¿Cuándo?, ¿Dónde?, ¿Por qué? y ¿Cómo?</td><td><select data-answer="V"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>El sesgo informativo ocurre cuando un medio muestra solo un lado de la historia.</td><td><select data-answer="V"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>Un titular amarillista busca informar con máxima precisión sin causar sensacionalismo.</td><td><select data-answer="F"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>Contrastar información implica revisar la misma noticia en diferentes fuentes independientes.</td><td><select data-answer="V"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
+            <tr><td>Las noticias de opinión tienen el mismo objetivo informativo que una nota periodística neutral.</td><td><select data-answer="F"><option value="">–</option><option value="V">Verdadero</option><option value="F">Falso</option></select></td></tr>
           </tbody>
         </table></div>
-        <label>Verbessere die falschen Aussagen:<textarea id="ex5_corr" data-save></textarea></label>
+        <label>Justifica o corrige brevemente las afirmaciones falsas:<textarea id="ex5_corr" data-save></textarea></label>
         <div class="feedback"></div>
       </section>
 
+      <!-- SECCIÓN 6 -->
       <section id="sec6">
-        <h2>6. Zweites Sehen: Informationen sammeln</h2>
-        <p class="instruction">Notiere Stichwörter. Du musst keine vollständigen Sätze schreiben.</p>
+        <h2>6. Ficha de Recopilación de Datos</h2>
+        <p class="instruction">Analiza una noticia reciente de tu interés y completa la siguiente tabla de síntesis.</p>
         <div class="table-wrap"><table>
-          <thead><tr><th>Thema</th><th>Wer oder wo?</th><th>Was ist passiert?</th><th>Wichtige Information</th></tr></thead>
+          <thead><tr><th>Sección</th><th>¿Quién o Dónde?</th><th>¿Qué sucedió?</th><th>Detalle Importante</th></tr></thead>
           <tbody id="notesTable"></tbody>
         </table></div>
       </section>
 
+      <!-- SECCIÓN 7 -->
       <section id="sec7">
-        <h2>7. Eine Nachricht zusammenfassen</h2>
-        <div class="sentence-starters"><strong>Satzanfänge:</strong> In der Nachricht geht es um … ·
-          Das Ereignis findet in … statt. · Wichtig ist, dass … · Außerdem wird berichtet, dass …</div>
-        <textarea id="ex7" data-save placeholder="Meine Zusammenfassung …"></textarea>
+        <h2>7. Síntesis y Redacción</h2>
+        <div class="sentence-starters"><strong>Conectores sugeridos:</strong> En primer lugar… · De acuerdo con las fuentes… · Un aspecto clave es que… · En conclusión…</div>
+        <textarea id="ex7" data-save placeholder="Redacta aquí un resumen articulado de la noticia analizada (mínimo 4 líneas)…"></textarea>
       </section>
 
+      <!-- SECCIÓN 8 -->
       <section id="sec8">
-        <h2>8. Mündliche Aufgabe: Nachrichtensprecher/in</h2>
-        <p>Bereitet zu zweit eine Nachricht von ungefähr 45 Sekunden vor. Verwendet mindestens
-          drei Wörter aus Aufgabe 1.</p>
-        <textarea id="ex8" data-save placeholder="Guten Tag. Hier sind die Nachrichten in Einfacher Sprache …"></textarea>
+        <h2>8. Expresión Oral y Guion Periodístico</h2>
+        <p>Escribe un guion breve (aproximadamente de 40 a 60 segundos) como si fueras un presentador de noticias de televisión o radio dando un boletín de última hora.</p>
+        <textarea id="ex8" data-save placeholder="Buenas tardes, bienvenidos al reporte. Hoy informamos que…"></textarea>
       </section>
 
+      <!-- SECCIÓN 9 -->
       <section id="sec9">
-        <h2>9. Diskussion</h2>
-        <p>Wähle eine Frage: Sollten soziale Medien erst ab 15 Jahren erlaubt sein? Warum sind
-          Nachrichten in Einfacher Sprache wichtig? Welche Nachricht am wichtigsten ist?</p>
-        <textarea id="ex9" data-save placeholder="Meiner Meinung nach …"></textarea>
+        <h2>9. Reflexión Crítica y Debate</h2>
+        <p>Responde a una de las siguientes preguntas: ¿Debería existir regulación legal sobre las noticias falsas en redes sociales? ¿Cómo influye el sensacionalismo en la percepción del público?</p>
+        <textarea id="ex9" data-save placeholder="En mi opinión…"></textarea>
       </section>
 
       <details>
-        <summary>Lösungsschlüssel für die Lehrkraft</summary>
+        <summary>Pauta de Corrección / Respuestas para el Docente</summary>
         <div class="teacher">
-          <p><strong>Aufgabe 1:</strong> Vorsitzende–c · Klage–e · Angriff–b · entlassen–a · soziale Medien–d · befassen–f</p>
-          <p><strong>Aufgabe 3:</strong> Alle Themen außer Fußballspiel und Musikgruppe.</p>
-          <p><strong>Aufgabe 4:</strong> 1 Unionsfraktion · 2 Corona-Masken · 3 Iran · 4 Ukraine · 5 soziale Medien · 6 Wetter.</p>
-          <p><strong>Aufgabe 5:</strong> R · R · F · R · R · F · R.</p>
+          <p><strong>Ejercicio 1:</strong> 1–c | 2–f | 3–a | 4–e | 5–d</p>
+          <p><strong>Ejercicio 3:</strong> Válidos: Titular, Bajada, Entradilla, Cuerpo, Fotografía y epígrafe.</p>
+          <p><strong>Ejercicio 4:</strong> Orden correcto: 4, 1, 5, 2, 3.</p>
+          <p><strong>Ejercicio 5:</strong> V · F · V · V · F · V · F.</p>
         </div>
       </details>
-
-      <p class="source">Quelle:
-        <a href="https://www.tagesschau.de/tagesschau_in_einfacher_sprache/tse-1352.html" target="_blank" rel="noopener">
-          tagesschau in Einfacher Sprache, Sendung vom 16.07.2026
-        </a>
-      </p>
     </div>
   </main>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwB3BkOsPKY6V8LAjBh1HDaXJojnDo5swyWdlYGgksR-78IQno9Xkl3of2y_YkmyEl/exec";
+    // === REEMPLAZA ESTA URL CON TU NUEVO GOOGLE APPS SCRIPT ===
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybySwLcAd7TPjqtKmiftVdIuA1JwgGEwcJQRElmLIj0pxXvw-oO21__x13FZMYrBAN/exec";
 
-    // --- VARIABLES SISTEMA ANTI-TRAMPAS ---
+    // --- SISTEMA ANTI-TRAMPAS ---
     const startTime = Date.now();
     let tabSwitches = 0;
     let pasteCount = 0;
     let pasteDetailsArr = [];
 
-    // Detectar si el usuario cambia de pestaña o minimiza
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         tabSwitches++;
       }
     });
 
-    // Detectar si se pega texto en campos de respuesta
     document.addEventListener("paste", (e) => {
       const target = e.target;
       if (target.tagName === "TEXTAREA" || target.tagName === "INPUT") {
         pasteCount++;
-        const fieldName = target.id || target.getAttribute("placeholder") || target.name || "campo sin ID";
+        const fieldName = target.id || target.getAttribute("placeholder") || "campo_sin_id";
         pasteDetailsArr.push(fieldName);
       }
     });
 
-    // --- LOGICA DE LA HOJA DE TRABAJO ---
-    const topics=["Unionsfraktion","Corona-Masken","Krieg gegen Iran","Ukraine","Soziale Medien","Wetter"];
-    const tbody=document.getElementById("notesTable");
-    topics.forEach((topic,i)=>{
-      const row=document.createElement("tr");
-      row.innerHTML=`<td><strong>${topic}</strong></td>`+
-        `<td><input type="text" data-save data-key="note-${i}-1"></td>`+
-        `<td><input type="text" data-save data-key="note-${i}-2"></td>`+
-        `<td><input type="text" data-save data-key="note-${i}-3"></td>`;
+    // --- TABLA DE NOTAS Y SISTEMA INTERACTIVO ---
+    const topics = ["Internacional", "Economía", "Ciencia y Tecnología", "Cultura / Deportes"];
+    const tbody = document.getElementById("notesTable");
+    topics.forEach((topic, i) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td><strong>${topic}</strong></td>` +
+        `<td><input type="text" data-save data-key="note-${i}-1" placeholder="Participantes / Lugar"></td>` +
+        `<td><input type="text" data-save data-key="note-${i}-2" placeholder="Hecho principal"></td>` +
+        `<td><input type="text" data-save data-key="note-${i}-3" placeholder="Dato relevante"></td>`;
       tbody.appendChild(row);
     });
 
-    function allSaveFields(){return [...document.querySelectorAll("[data-save], select, input[type=checkbox], #studentName, #date")]}
-    function fieldKey(el,index){return el.dataset.key||el.id||`field-${index}`}
+    function allSaveFields() {
+      return [...document.querySelectorAll("[data-save], select, input[type=checkbox], #studentName, #date")];
+    }
     
-    function saveWork(){
-      const data={};
-      allSaveFields().forEach((el,i)=>data[fieldKey(el,i)]=el.type==="checkbox"?el.checked:el.value);
-      localStorage.setItem("tagesschau-arbeitsblatt",JSON.stringify(data));
-      alert("Die Antworten wurden auf diesem Gerät gespeichert.");
+    function fieldKey(el, index) {
+      return el.dataset.key || el.id || `field-${index}`;
+    }
+    
+    function saveWork() {
+      const data = {};
+      allSaveFields().forEach((el, i) => data[fieldKey(el, i)] = el.type === "checkbox" ? el.checked : el.value);
+      localStorage.setItem("guiag-espanol-borrador", JSON.stringify(data));
+      alert("Tus respuestas han sido guardadas localmente en este dispositivo.");
     }
 
-    function loadWork(){
-      const raw=localStorage.getItem("tagesschau-arbeitsblatt"); if(!raw)return;
-      const data=JSON.parse(raw);
-      allSaveFields().forEach((el,i)=>{
-        const v=data[fieldKey(el,i)]; if(v===undefined)return;
-        if(el.type==="checkbox")el.checked=v; else el.value=v;
+    function loadWork() {
+      const raw = localStorage.getItem("guiag-espanol-borrador");
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      allSaveFields().forEach((el, i) => {
+        const v = data[fieldKey(el, i)];
+        if (v === undefined) return;
+        if (el.type === "checkbox") el.checked = v;
+        else el.value = v;
       });
     }
 
-    function markSection(section,correct,total){
-      const box=section.querySelector(".feedback"); if(!box)return;
-      box.className=`feedback ${correct===total?"ok":"bad"}`;
-      box.textContent=`${correct} von ${total} Punkten richtig.`;
+    function markSection(section, correct, total) {
+      const box = section.querySelector(".feedback");
+      if (!box) return;
+      box.className = `feedback ${correct === total ? "ok" : "bad"}`;
+      box.textContent = `${correct} de ${total} puntos obtenidos.`;
     }
 
     function sendToGoogleSheets(scoreText) {
@@ -301,17 +302,15 @@
       const studentName = studentNameInput ? studentNameInput.value.trim() : "";
       
       if (!studentName) {
-        alert("Bitte gib zuerst deinen Namen ein! / Por favor ingresa tu nombre antes de enviar.");
+        alert("¡Por favor, ingresa tu nombre completo antes de enviar la guía!");
         return;
       }
 
-      // Calcular tiempo transcurrido
       const totalSeconds = Math.floor((Date.now() - startTime) / 1000);
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
       const timeSpentStr = `${minutes}m ${seconds}s`;
 
-      // Respuestas por ejercicio
       const ex1Data = [...document.querySelectorAll("#sec1 select")].map(s => s.value).join(", ");
       const ex2Data = [...document.querySelectorAll("#sec2 input")].map(i => i.value).join(" | ");
       const ex3Data = [...document.querySelectorAll("#sec3 input")].map(c => c.checked ? "Sí" : "No").join(", ");
@@ -320,7 +319,7 @@
       
       let ex6Data = "";
       topics.forEach((t, i) => {
-        const rowVal = [...document.querySelectorAll(`[data-key^="note-${i}"]`)].map(i => i.value).join(" - ");
+        const rowVal = [...document.querySelectorAll(`[data-key^="note-${i}"]`)].map(input => input.value).join(" - ");
         ex6Data += `[${t}: ${rowVal}] `;
       });
 
@@ -350,33 +349,37 @@
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payload)
       }).then(() => {
-        alert("Vielen Dank! Deine Antworten wurden erfolgreich an den Lehrer gesendet.");
+        alert("¡Muchas gracias! Tus respuestas y evaluación han sido enviadas correctamente al profesor.");
       }).catch(err => {
         console.error("Error al enviar:", err);
-        alert("Fehler beim Senden. Bitte versuche es noch einmal.");
+        alert("Ocurrió un error al enviar. Por favor vuelve a intentarlo.");
       });
     }
 
-    function checkAnswers(){
-      let score=0,total=0;
-      document.querySelectorAll("section").forEach(section=>{
-        let s=0,t=0;
-        section.querySelectorAll("select[data-answer]").forEach(el=>{
-          t++; total++; const ok=el.value===el.dataset.answer; if(ok){s++;score++}
-          el.style.borderColor=ok?"var(--ok)":"var(--bad)";
+    function checkAnswers() {
+      let score = 0, total = 0;
+      document.querySelectorAll("section").forEach(section => {
+        let s = 0, t = 0;
+        section.querySelectorAll("select[data-answer]").forEach(el => {
+          t++; total++;
+          const ok = el.value === el.dataset.answer;
+          if (ok) { s++; score++; }
+          el.style.borderColor = ok ? "var(--ok)" : "var(--bad)";
         });
-        section.querySelectorAll('input[type="checkbox"][data-correct]').forEach(el=>{
-          const should=el.dataset.correct==="true"; const ok=el.checked===should;
-          t++; total++; if(ok){s++;score++}
-          el.closest(".choice").style.borderColor=ok?"var(--ok)":"var(--bad)";
+        section.querySelectorAll('input[type="checkbox"][data-correct]').forEach(el => {
+          const should = el.dataset.correct === "true";
+          const ok = el.checked === should;
+          t++; total++;
+          if (ok) { s++; score++; }
+          el.closest(".choice").style.borderColor = ok ? "var(--ok)" : "var(--bad)";
         });
-        if(t)markSection(section,s,t);
+        if (t) markSection(section, s, t);
       });
 
       const scoreText = `${score} / ${total}`;
       document.getElementById("score").textContent = scoreText;
       saveWork();
-      window.scrollTo({top:0,behavior:"smooth"});
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       sendToGoogleSheets(scoreText);
     }
