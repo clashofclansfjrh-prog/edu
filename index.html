@@ -35,7 +35,6 @@
     #score{font-size:36px;font-weight:850;color:var(--navy)}
     section{margin:34px 0;padding-top:6px}
     h2{margin:0 0 8px;color:var(--navy);font-size:25px}
-    h3{color:var(--navy)}
     .instruction{margin:0 0 18px;color:var(--muted)}
     table{width:100%;border-collapse:collapse;margin:14px 0}
     th{background:var(--blue);color:#fff;text-align:left}
@@ -43,7 +42,7 @@
     select,input[type="text"],textarea{font:inherit;border:1px solid #aebdca;border-radius:7px;padding:8px;background:#fff}
     select{min-width:115px}
     textarea{width:100%;min-height:95px;resize:vertical}
-    .topic-list,.check-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .topic-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
     .choice{display:flex;gap:9px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}
     .choice input{margin-top:5px;transform:scale(1.15)}
     .answer-line{width:100%;margin:5px 0 12px}
@@ -58,7 +57,7 @@
     .source a{color:var(--blue)}
     @media(max-width:760px){
       header,.content{padding:30px 20px}
-      h1{font-size:30px}.intro,.meta,.topic-list,.check-list{grid-template-columns:1fr}
+      h1{font-size:30px}.intro,.meta,.topic-list{grid-template-columns:1fr}
       .toolbar strong{display:none}
       table{font-size:14px}
       .table-wrap{overflow-x:auto}
@@ -212,7 +211,7 @@
       <section id="sec9">
         <h2>9. Diskussion</h2>
         <p>Wähle eine Frage: Sollten soziale Medien erst ab 15 Jahren erlaubt sein? Warum sind
-          Nachrichten in Einfacher Sprache wichtig? Welche Nachricht ist am wichtigsten?</p>
+          Nachrichten in Einfacher Sprache wichtig? Welche Nachricht am wichtigsten ist?</p>
         <textarea id="ex9" data-save placeholder="Meiner Meinung nach …"></textarea>
       </section>
 
@@ -235,9 +234,32 @@
   </main>
 
   <script>
-    // URL de Google Apps Script configurada
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzI042NmEj4EWmVUrNpLcPuphD-24ovoC07q15PbRK8l7kZVEx4RsUIVrBXFftFO986/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwB3BkOsPKY6V8LAjBh1HDaXJojnDo5swyWdlYGgksR-78IQno9Xkl3of2y_YkmyEl/exec";
 
+    // --- VARIABLES SISTEMA ANTI-TRAMPAS ---
+    const startTime = Date.now();
+    let tabSwitches = 0;
+    let pasteCount = 0;
+    let pasteDetailsArr = [];
+
+    // Detectar si el usuario cambia de pestaña o minimiza
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        tabSwitches++;
+      }
+    });
+
+    // Detectar si se pega texto en campos de respuesta
+    document.addEventListener("paste", (e) => {
+      const target = e.target;
+      if (target.tagName === "TEXTAREA" || target.tagName === "INPUT") {
+        pasteCount++;
+        const fieldName = target.id || target.getAttribute("placeholder") || target.name || "campo sin ID";
+        pasteDetailsArr.push(fieldName);
+      }
+    });
+
+    // --- LOGICA DE LA HOJA DE TRABAJO ---
     const topics=["Unionsfraktion","Corona-Masken","Krieg gegen Iran","Ukraine","Soziale Medien","Wetter"];
     const tbody=document.getElementById("notesTable");
     topics.forEach((topic,i)=>{
@@ -275,13 +297,21 @@
     }
 
     function sendToGoogleSheets(scoreText) {
-      const studentName = document.getElementById("studentName").value.trim();
+      const studentNameInput = document.getElementById("studentName");
+      const studentName = studentNameInput ? studentNameInput.value.trim() : "";
+      
       if (!studentName) {
-        alert("Bitte gib zuerst deinen Namen ein!");
+        alert("Bitte gib zuerst deinen Namen ein! / Por favor ingresa tu nombre antes de enviar.");
         return;
       }
 
-      // Preparar respuestas estructuradas por ejercicio
+      // Calcular tiempo transcurrido
+      const totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const timeSpentStr = `${minutes}m ${seconds}s`;
+
+      // Respuestas por ejercicio
       const ex1Data = [...document.querySelectorAll("#sec1 select")].map(s => s.value).join(", ");
       const ex2Data = [...document.querySelectorAll("#sec2 input")].map(i => i.value).join(" | ");
       const ex3Data = [...document.querySelectorAll("#sec3 input")].map(c => c.checked ? "Sí" : "No").join(", ");
@@ -296,30 +326,33 @@
 
       const payload = {
         studentName: studentName,
-        date: document.getElementById("date").value,
+        date: document.getElementById("date") ? document.getElementById("date").value : "",
         score: scoreText,
+        timeSpent: timeSpentStr,
+        tabSwitches: tabSwitches,
+        pasteEvents: pasteCount,
+        pasteDetails: pasteDetailsArr.length > 0 ? pasteDetailsArr.join(", ") : "Ninguno",
         ex1: ex1Data,
         ex2: ex2Data,
         ex3: ex3Data,
         ex4: ex4Data,
         ex5: ex5Data,
-        ex5_corr: document.getElementById("ex5_corr").value,
+        ex5_corr: document.getElementById("ex5_corr") ? document.getElementById("ex5_corr").value : "",
         ex6: ex6Data,
-        ex7: document.getElementById("ex7").value,
-        ex8: document.getElementById("ex8").value,
-        ex9: document.getElementById("ex9").value
+        ex7: document.getElementById("ex7") ? document.getElementById("ex7").value : "",
+        ex8: document.getElementById("ex8") ? document.getElementById("ex8").value : "",
+        ex9: document.getElementById("ex9") ? document.getElementById("ex9").value : ""
       };
 
-      // Enviar datos vía POST a Google Sheets
       fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payload)
       }).then(() => {
         alert("Vielen Dank! Deine Antworten wurden erfolgreich an den Lehrer gesendet.");
       }).catch(err => {
-        console.error(err);
+        console.error("Error al enviar:", err);
         alert("Fehler beim Senden. Bitte versuche es noch einmal.");
       });
     }
@@ -345,7 +378,6 @@
       saveWork();
       window.scrollTo({top:0,behavior:"smooth"});
 
-      // Envío automático al Google Sheet al terminar
       sendToGoogleSheets(scoreText);
     }
 
