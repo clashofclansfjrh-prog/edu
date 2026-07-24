@@ -396,15 +396,28 @@
       }
     }
 
-    // --- CONTROL DE DESENFOQUE ---
+    // --- CONTROL DE DESENFOQUE Y RETARDO EXTENDIDO (ANTI-RECORTE) ---
+    let blurTimeout = null;
+
     function activateBlur() {
       document.body.classList.add("blurred");
+      document.body.style.opacity = "0";
       wipeClipboard();
     }
 
     function removeBlur() {
       document.body.classList.remove("blurred");
       document.body.style.opacity = "1";
+    }
+
+    function triggerExtendedBlur(extraDelayMs = 500) {
+      activateBlur();
+
+      if (blurTimeout) clearTimeout(blurTimeout);
+
+      blurTimeout = setTimeout(() => {
+        removeBlur();
+      }, extraDelayMs);
     }
 
     window.addEventListener("blur", () => {
@@ -415,28 +428,35 @@
     document.addEventListener("mouseleave", activateBlur);
 
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) activateBlur();
-      else removeBlur();
+      if (document.hidden) {
+        activateBlur();
+      } else {
+        triggerExtendedBlur(500);
+      }
     });
 
-    window.addEventListener("focus", removeBlur);
-    document.addEventListener("mouseenter", removeBlur);
+    window.addEventListener("focus", () => {
+      // Al cerrar la Herramienta de Recortes y volver al navegador, la pantalla sigue oscura 0,5s más
+      triggerExtendedBlur(500);
+    });
+
+    document.addEventListener("mouseenter", () => {
+      triggerExtendedBlur(500);
+    });
 
     // --- CAPTURA DE TECLAS MULTIPLATAFORMA (MAC + WINDOWS) ---
     document.addEventListener('keydown', (e) => {
       const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       const modifierKey = isMac ? e.metaKey : e.ctrlKey;
 
-      // Detecta Capturas: PrintScreen (Win) o Cmd+Shift+3/4/5 (Mac) o Win+Shift+S
+      // Detecta Capturas: PrintScreen (Win), Win+Shift+S (Snipping Tool) o Cmd+Shift+3/4/5 (Mac)
       if (
         e.key === "PrintScreen" || 
         e.keyCode === 44 || 
-        ((e.key === 'S' || e.key === 's') && e.shiftKey && modifierKey) ||
+        ((e.key === 'S' || e.key === 's') && e.shiftKey && (e.metaKey || e.ctrlKey)) ||
         (isMac && e.shiftKey && e.metaKey && (e.key === '3' || e.key === '4' || e.key === '5'))
       ) {
-        document.body.style.opacity = "0";
         activateBlur();
-        wipeClipboard();
       }
 
       // Bloquea Copiar/Ver Código/Guardar (Ctrl+C, Ctrl+U, Ctrl+S / Cmd+C, Cmd+U, Cmd+S)
@@ -451,9 +471,8 @@
     });
 
     document.addEventListener("keyup", (e) => {
-      if (e.key === "PrintScreen" || e.keyCode === 44) {
-        wipeClipboard();
-        setTimeout(removeBlur, 800);
+      if (e.key === "PrintScreen" || e.keyCode === 44 || e.key === "Meta" || e.key === "OS") {
+        triggerExtendedBlur(500);
       }
     });
 
