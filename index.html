@@ -11,7 +11,27 @@
       --ok:#18794e;--bad:#b42318;--paper:#fff;--bg:#eef2f5
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial,sans-serif}
+    
+    /* ANTI-TRAMPAS: Deshabilita la selección de texto en la página */
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.55 Arial,sans-serif;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Permite seleccionar e interactuar en los campos donde el alumno debe responder */
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+
     .toolbar{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;
       justify-content:space-between;padding:12px max(18px,calc((100vw - 1050px)/2));
       background:var(--navy);color:#fff}
@@ -28,7 +48,6 @@
     .meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
     .meta label{font-weight:700;color:#fff}
     
-    /* === CORRECCIÓN VISUAL PARA NOMBRE Y FECHA === */
     .meta input{
       width:100%;
       margin-top:5px;
@@ -75,13 +94,6 @@
       .toolbar strong{display:none}
       table{font-size:14px}
       .table-wrap{overflow-x:auto}
-    }
-    @media print{
-      body{background:#fff;font-size:12px}.toolbar{display:none}main{width:auto;margin:0;box-shadow:none}
-      header{padding:22px 28px;background:#fff!important;color:var(--ink);border-bottom:3px solid var(--navy)}
-      header p{color:var(--muted)}header .eyebrow{color:var(--teal)}
-      .content{padding:24px 28px}.score-card{display:none}section{break-inside:avoid;margin:22px 0}
-      textarea{min-height:70px}details{display:none}
     }
   </style>
 </head>
@@ -244,30 +256,45 @@
 
   <script>
     // === REEMPLAZA ESTA URL CON TU NUEVO GOOGLE APPS SCRIPT ===
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw8hbk4EFDb3pi59Xqibcs0GYEm11whfll0xax-muQvulr1OYJXEIyMvJXlAknAC7aI/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn5u60wxD2chchA6rzm_clA4dwEVTfTaitI_YY-8dedthc-7f6eE1-cGrBka9UuXic/exec";
 
-    // --- SISTEMA ANTI-TRAMPAS ---
+    // --- SISTEMA ANTI-TRAMPAS RIGUROSO ---
     const startTime = Date.now();
     let tabSwitches = 0;
     let pasteCount = 0;
     let pasteDetailsArr = [];
 
+    // 1. Contador de salida de pestaña
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         tabSwitches++;
       }
     });
 
+    // 2. Bloquear Clic Derecho
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // 3. Bloqueo Físico de Pegar (Ctrl + V)
     document.addEventListener("paste", (e) => {
+      e.preventDefault(); // Cancela la acción de pegar
+      pasteCount++;
       const target = e.target;
-      if (target.tagName === "TEXTAREA" || target.tagName === "INPUT") {
-        pasteCount++;
-        const fieldName = target.id || target.getAttribute("placeholder") || "campo_sin_id";
-        pasteDetailsArr.push(fieldName);
+      const fieldName = target.id || target.getAttribute("placeholder") || "campo";
+      pasteDetailsArr.push(fieldName);
+      alert("⚠️ Por seguridad y honestidad académica, no está permitido pegar texto. Por favor, redacta tu respuesta directamente.");
+    });
+
+    // 4. Bloqueo de atajos de copiar y consola de desarrollador
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
+        e.preventDefault();
+      }
+      if (e.key === 'F12') {
+        e.preventDefault();
       }
     });
 
-    // --- TABLA DE NOTAS Y SISTEMA INTERACTIVO ---
+    // --- TABLA Y LÓGICA DE ENVÍO ---
     const topics = ["Internacional", "Economía", "Ciencia y Tecnología", "Cultura / Deportes"];
     const tbody = document.getElementById("notesTable");
     topics.forEach((topic, i) => {
@@ -346,7 +373,7 @@
         timeSpent: timeSpentStr,
         tabSwitches: tabSwitches,
         pasteEvents: pasteCount,
-        pasteDetails: pasteDetailsArr.length > 0 ? pasteDetailsArr.join(", ") : "Ninguno",
+        pasteDetails: pasteDetailsArr.length > 0 ? pasteDetailsArr.join(", ") : "Intentó pegar " + pasteCount + " veces (Bloqueado)",
         ex1: ex1Data,
         ex2: ex2Data,
         ex3: ex3Data,
