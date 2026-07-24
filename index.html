@@ -264,8 +264,28 @@
 
   <script>
     // === REEMPLAZA ESTA URL CON TU NUEVO GOOGLE APPS SCRIPT ===
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/TU_NUEVO_ID_AQUI/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZWsNdDai7gO9Z_jqZhJTdsVKza1PRLY0w8D-_2plnayYbsokVFFcqZD58TDo8RdY3/exec";
+// Ocultar la pantalla inmediatamente apenas la tecla va hacia abajo
+document.addEventListener("keydown", (e) => {
+  if (e.key === "PrintScreen" || e.keyCode === 44) {
+    // Hace invisible la página en 0 milisegundos
+    document.body.style.opacity = "0";
+    
+    // Vacía el portapapeles
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText("");
+    }
+  }
+});
 
+// Volver a mostrar la pantalla cuando suelte la tecla
+document.addEventListener("keyup", (e) => {
+  if (e.key === "PrintScreen" || e.keyCode === 44) {
+    setTimeout(() => {
+      document.body.style.opacity = "1";
+    }, 1000); // Tarda 1 segundo en volver para asegurar que la captura ya falló
+  }
+});
     // --- VARIABLES DE REGISTRO ---
     const startTime = Date.now();
     let tabSwitches = 0;
