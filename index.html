@@ -78,7 +78,7 @@
     <div>
       <button class="secondary" type="button" onclick="saveWork()">Speichern</button>
       <button class="secondary" type="button" onclick="window.print()">Drucken / PDF</button>
-      <button type="button" onclick="checkAnswers()">Auswerten</button>
+      <button type="button" onclick="checkAnswers()">Auswerten & Senden</button>
     </div>
   </div>
 
@@ -109,7 +109,7 @@
         </div>
       </div>
 
-      <section>
+      <section id="sec1">
         <h2>1. Vor dem Sehen: Wortschatz</h2>
         <p class="instruction">Wähle für jedes Wort die passende Erklärung.</p>
         <div class="table-wrap"><table>
@@ -126,7 +126,7 @@
         <div class="feedback"></div>
       </section>
 
-      <section>
+      <section id="sec2">
         <h2>2. Vor dem Sehen: Vermutungen</h2>
         <p class="instruction">Schreibe zu drei Themen eine Vermutung.</p>
         <input class="answer-line" type="text" data-save placeholder="Ich glaube, dass …">
@@ -134,7 +134,7 @@
         <input class="answer-line" type="text" data-save placeholder="Wahrscheinlich …">
       </section>
 
-      <section>
+      <section id="sec3">
         <h2>3. Erstes Sehen: Welche Themen kommen vor?</h2>
         <p class="instruction">Kreuze alle Themen an, die in der Sendung vorkommen.</p>
         <div class="topic-list">
@@ -150,7 +150,7 @@
         <div class="feedback"></div>
       </section>
 
-      <section>
+      <section id="sec4">
         <h2>4. Erstes Sehen: Reihenfolge</h2>
         <p class="instruction">Trage die richtige Reihenfolge von 1 bis 6 ein.</p>
         <div class="table-wrap"><table>
@@ -167,7 +167,7 @@
         <div class="feedback"></div>
       </section>
 
-      <section>
+      <section id="sec5">
         <h2>5. Zweites Sehen: Richtig oder falsch?</h2>
         <p class="instruction">Wähle die passende Antwort.</p>
         <div class="table-wrap"><table>
@@ -182,11 +182,11 @@
             <tr><td>Am Ende der Sendung kommt das Wetter.</td><td><select data-answer="R"><option value="">–</option><option value="R">Richtig</option><option value="F">Falsch</option></select></td></tr>
           </tbody>
         </table></div>
-        <label>Verbessere die falschen Aussagen:<textarea data-save></textarea></label>
+        <label>Verbessere die falschen Aussagen:<textarea id="ex5_corr" data-save></textarea></label>
         <div class="feedback"></div>
       </section>
 
-      <section>
+      <section id="sec6">
         <h2>6. Zweites Sehen: Informationen sammeln</h2>
         <p class="instruction">Notiere Stichwörter. Du musst keine vollständigen Sätze schreiben.</p>
         <div class="table-wrap"><table>
@@ -195,25 +195,25 @@
         </table></div>
       </section>
 
-      <section>
+      <section id="sec7">
         <h2>7. Eine Nachricht zusammenfassen</h2>
         <div class="sentence-starters"><strong>Satzanfänge:</strong> In der Nachricht geht es um … ·
           Das Ereignis findet in … statt. · Wichtig ist, dass … · Außerdem wird berichtet, dass …</div>
-        <textarea data-save placeholder="Meine Zusammenfassung …"></textarea>
+        <textarea id="ex7" data-save placeholder="Meine Zusammenfassung …"></textarea>
       </section>
 
-      <section>
+      <section id="sec8">
         <h2>8. Mündliche Aufgabe: Nachrichtensprecher/in</h2>
         <p>Bereitet zu zweit eine Nachricht von ungefähr 45 Sekunden vor. Verwendet mindestens
           drei Wörter aus Aufgabe 1.</p>
-        <textarea data-save placeholder="Guten Tag. Hier sind die Nachrichten in Einfacher Sprache …"></textarea>
+        <textarea id="ex8" data-save placeholder="Guten Tag. Hier sind die Nachrichten in Einfacher Sprache …"></textarea>
       </section>
 
-      <section>
+      <section id="sec9">
         <h2>9. Diskussion</h2>
         <p>Wähle eine Frage: Sollten soziale Medien erst ab 15 Jahren erlaubt sein? Warum sind
           Nachrichten in Einfacher Sprache wichtig? Welche Nachricht ist am wichtigsten?</p>
-        <textarea data-save placeholder="Meiner Meinung nach …"></textarea>
+        <textarea id="ex9" data-save placeholder="Meiner Meinung nach …"></textarea>
       </section>
 
       <details>
@@ -235,6 +235,9 @@
   </main>
 
   <script>
+    // URL de Google Apps Script configurada
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-s8vXnud-RJsVPpkg2DZ0_vZQoEcTF4ffkBjmfZOEaAPAXvsllQSZYbvvphQrLxM/exec";
+
     const topics=["Unionsfraktion","Corona-Masken","Krieg gegen Iran","Ukraine","Soziale Medien","Wetter"];
     const tbody=document.getElementById("notesTable");
     topics.forEach((topic,i)=>{
@@ -248,12 +251,14 @@
 
     function allSaveFields(){return [...document.querySelectorAll("[data-save], select, input[type=checkbox], #studentName, #date")]}
     function fieldKey(el,index){return el.dataset.key||el.id||`field-${index}`}
+    
     function saveWork(){
       const data={};
       allSaveFields().forEach((el,i)=>data[fieldKey(el,i)]=el.type==="checkbox"?el.checked:el.value);
       localStorage.setItem("tagesschau-arbeitsblatt",JSON.stringify(data));
       alert("Die Antworten wurden auf diesem Gerät gespeichert.");
     }
+
     function loadWork(){
       const raw=localStorage.getItem("tagesschau-arbeitsblatt"); if(!raw)return;
       const data=JSON.parse(raw);
@@ -262,11 +267,63 @@
         if(el.type==="checkbox")el.checked=v; else el.value=v;
       });
     }
+
     function markSection(section,correct,total){
       const box=section.querySelector(".feedback"); if(!box)return;
       box.className=`feedback ${correct===total?"ok":"bad"}`;
       box.textContent=`${correct} von ${total} Punkten richtig.`;
     }
+
+    function sendToGoogleSheets(scoreText) {
+      const studentName = document.getElementById("studentName").value.trim();
+      if (!studentName) {
+        alert("Bitte gib zuerst deinen Namen ein!");
+        return;
+      }
+
+      // Preparar respuestas estructuradas por ejercicio
+      const ex1Data = [...document.querySelectorAll("#sec1 select")].map(s => s.value).join(", ");
+      const ex2Data = [...document.querySelectorAll("#sec2 input")].map(i => i.value).join(" | ");
+      const ex3Data = [...document.querySelectorAll("#sec3 input")].map(c => c.checked ? "Sí" : "No").join(", ");
+      const ex4Data = [...document.querySelectorAll("#sec4 select")].map(s => s.value).join(", ");
+      const ex5Data = [...document.querySelectorAll("#sec5 select")].map(s => s.value).join(", ");
+      
+      let ex6Data = "";
+      topics.forEach((t, i) => {
+        const rowVal = [...document.querySelectorAll(`[data-key^="note-${i}"]`)].map(i => i.value).join(" - ");
+        ex6Data += `[${t}: ${rowVal}] `;
+      });
+
+      const payload = {
+        studentName: studentName,
+        date: document.getElementById("date").value,
+        score: scoreText,
+        ex1: ex1Data,
+        ex2: ex2Data,
+        ex3: ex3Data,
+        ex4: ex4Data,
+        ex5: ex5Data,
+        ex5_corr: document.getElementById("ex5_corr").value,
+        ex6: ex6Data,
+        ex7: document.getElementById("ex7").value,
+        ex8: document.getElementById("ex8").value,
+        ex9: document.getElementById("ex9").value
+      };
+
+      // Enviar datos vía POST a Google Sheets
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(() => {
+        alert("Vielen Dank! Deine Antworten wurden erfolgreich an den Lehrer gesendet.");
+      }).catch(err => {
+        console.error(err);
+        alert("Fehler beim Senden. Bitte versuche es noch einmal.");
+      });
+    }
+
     function checkAnswers(){
       let score=0,total=0;
       document.querySelectorAll("section").forEach(section=>{
@@ -282,10 +339,16 @@
         });
         if(t)markSection(section,s,t);
       });
-      document.getElementById("score").textContent=`${score} / ${total}`;
+
+      const scoreText = `${score} / ${total}`;
+      document.getElementById("score").textContent = scoreText;
       saveWork();
       window.scrollTo({top:0,behavior:"smooth"});
+
+      // Envío automático al Google Sheet al terminar
+      sendToGoogleSheets(scoreText);
     }
+
     loadWork();
   </script>
 </body>
