@@ -26,8 +26,24 @@
     h1{margin:9px 0;font-size:38px;line-height:1.08}
     header p{margin:0;color:#e8f1f7;font-size:18px}
     .meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-    .meta label{font-weight:700}
-    .meta input{width:100%;margin-top:5px;padding:10px;border:1px solid #ffffff80;border-radius:7px;background:#ffffff15;color:#fff}
+    .meta label{font-weight:700;color:#fff}
+    
+    /* === CORRECCIÓN VISUAL PARA NOMBRE Y FECHA === */
+    .meta input{
+      width:100%;
+      margin-top:5px;
+      padding:10px;
+      border:1px solid #d7e0e8;
+      border-radius:7px;
+      background:#ffffff;
+      color:#22313f;
+      font-weight:600;
+    }
+    .meta input::placeholder{
+      color:#8899a6;
+      font-weight:normal;
+    }
+    
     .content{padding:38px 52px 52px}
     .intro{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;margin-bottom:30px}
     .card,.score-card{padding:20px;border:1px solid var(--line);border-radius:10px;background:#fff}
@@ -228,7 +244,7 @@
 
   <script>
     // === REEMPLAZA ESTA URL CON TU NUEVO GOOGLE APPS SCRIPT ===
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybySwLcAd7TPjqtKmiftVdIuA1JwgGEwcJQRElmLIj0pxXvw-oO21__x13FZMYrBAN/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/TU_NUEVO_ID_AQUI/exec";
 
     // --- SISTEMA ANTI-TRAMPAS ---
     const startTime = Date.now();
