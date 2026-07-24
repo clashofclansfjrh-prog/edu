@@ -31,7 +31,22 @@
       background-size: 30px 30px;
       background-position: 0 0, 15px 15px;
     }
-
+/* Marca de agua flotante de seguridad */
+.watermark-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.12; /* Visible en fotos de alta resolución */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
+  transform: rotate(-25deg) scale(1.2);
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
     /* Permitir selección de texto solo en campos donde escribe el estudiante */
     input, textarea {
       -webkit-user-select: text;
