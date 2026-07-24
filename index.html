@@ -24,6 +24,28 @@
       user-select: none;
     }
 
+    /* Marca de agua transparente sobre todo el examen */
+#watermark {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none; /* Permite hacer clic a través de ella */
+  z-index: 9999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
+  opacity: 0.12; /* Muy sutil para no molestar la lectura */
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+  transform: rotate(-25deg);
+}
+
+/* Efecto de desenfoque cuando intentan tomar recortes o salir */
+body.blurred {
+  filter: blur(12px) grayscale(100%);
+  transition: filter 0.1s ease;
+}
     /* Permite seleccionar e interactuar en los campos donde el alumno debe responder */
     input, textarea {
       -webkit-user-select: text;
@@ -255,6 +277,38 @@
   </main>
 
   <script>
+
+    // 1. Marca de agua dinámica cuando ingresan su nombre
+const nameInput = document.getElementById("studentName");
+const watermarkDiv = document.createElement("div");
+watermarkDiv.id = "watermark";
+document.body.appendChild(watermarkDiv);
+
+function updateWatermark() {
+  const name = nameInput.value.trim() || "EVALUACIÓN CONFIDENCIAL";
+  // Repite el nombre en pantalla
+  watermarkDiv.innerHTML = Array(20).fill(`<span>${name}</span>`).join("");
+}
+nameInput.addEventListener("input", updateWatermark);
+updateWatermark();
+
+// 2. Desenfocar el examen si activan la herramienta de recortes / pierden el foco
+window.addEventListener("blur", () => {
+  document.body.classList.add("blurred");
+});
+
+window.addEventListener("focus", () => {
+  document.body.classList.remove("blurred");
+});
+
+// 3. Capturar el botón PrintScreen e inhabilitar la copia
+document.addEventListener("keyup", (e) => {
+  if (e.key === "PrintScreen") {
+    // Limpia el portapapeles
+    navigator.clipboard.writeText("");
+    alert("⚠️ Las capturas de pantalla están registradas e identificadas con tu nombre.");
+  }
+});
     // === REEMPLAZA ESTA URL CON TU NUEVO GOOGLE APPS SCRIPT ===
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn5u60wxD2chchA6rzm_clA4dwEVTfTaitI_YY-8dedthc-7f6eE1-cGrBka9UuXic/exec";
 
