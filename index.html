@@ -39,7 +39,26 @@
       -ms-user-select: text;
       user-select: text;
     }
+/* DISTORSIÓN ANTI-Mapeo de Visión de IA */
+section p, section table, section .choice {
+  /* Inclina ligeramente el texto para distorsionar el vector de visión del OCR */
+  transform: rotate(-0.6deg) skewX(-1deg);
+  transform-origin: left center;
+  /* Espaciado de letras no estándar */
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
+}
 
+/* Patrón de interferencia de alto contraste solo sobre el texto de las preguntas */
+th, td, label.choice {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(23, 54, 93, 0.03),
+    rgba(23, 54, 93, 0.03) 2px,
+    transparent 2px,
+    transparent 8px
+  ) !important;
+}
     /* TEXTO TRAMPA INVISIBLE PARA IAs (Engaña el reconocimiento OCR) */
     .ai-trap {
       position: absolute;
@@ -287,7 +306,18 @@
   <script>
     // === REEMPLAZA ESTA URL CON TU GOOGLE APPS SCRIPT ===
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZWsNdDai7gO9Z_jqZhJTdsVKza1PRLY0w8D-_2plnayYbsokVFFcqZD58TDo8RdY3/exec";
-
+// Remplaza caracteres invisibles o similares en el texto para confundir a los tokenizadores de las IAs
+window.addEventListener("DOMContentLoaded", () => {
+  const elementsToOfuscate = document.querySelectorAll("section p, th, td, label.choice");
+  
+  elementsToOfuscate.forEach(el => {
+    // Reemplaza vocales por homóglifos o inserta un separador invisible de ancho cero (Zero-Width Space \u200B)
+    // El humano ve la palabra normal, pero la IA lee: "N\u200Bo\u200Bt\u200Bi\u200Bc\u200Bi\u200Ba"
+    if (el.children.length === 0) {
+      el.textContent = el.textContent.split('').join('\u200B');
+    }
+  });
+});
     // --- VARIABLES DE SEGUIMIENTO ---
     const startTime = Date.now();
     let tabSwitches = 0;
