@@ -12,16 +12,33 @@
     }
     *{box-sizing:border-box}
     
-    /* === MARCA DE AGUA FLOTANTE DE SEGURIDAD === */
+    /* === 1. INTERFERENCIA MOIRÉ ANTI-CÁMARA DE CELULAR === */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 99998;
+      /* Micro-líneas que descalibran el sensor/enfoque del teléfono */
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.03),
+        rgba(0, 0, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+    }
+
+    /* === 2. MARCA DE AGUA FLOTANTE DE SEGURIDAD (NOMBRE + IP) === */
     #watermark-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none; /* Permite hacer clic a través de ella */
-      z-index: 99999; /* Asegura que quede POR ENCIMA de toda la hoja blanca */
-      opacity: 0.15; /* Sutil pero visible ante cámaras de celular */
+      pointer-events: none;
+      z-index: 99999; /* Por encima de la hoja de examen */
+      opacity: 0.15;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
@@ -40,7 +57,7 @@
       white-space: nowrap;
     }
 
-    /* === SEGURIDAD Y PROTECCIÓN VISUAL ANTI-IA === */
+    /* === 3. ESTILOS BASE Y PROTECCIÓN ANTI-IA === */
     body{
       margin:0;
       color:var(--ink);
@@ -59,7 +76,7 @@
       background-position: 0 0, 15px 15px;
     }
 
-    /* Permitir selección solo en campos de texto */
+    /* Permitir selección solo en campos donde escribe el estudiante */
     input, textarea {
       -webkit-user-select: text;
       -moz-user-select: text;
@@ -148,7 +165,7 @@
   </style>
 </head>
 <body>
-  <!-- CONTENEDOR DE LA MARCA DE AGUA (SE LLENA DINÁMICAMENTE CON JS) -->
+  <!-- CONTENEDOR DE LA MARCA DE AGUA EN DIAGONAL -->
   <div id="watermark-overlay"></div>
 
   <!-- TEXTO TRAMPA INVISIBLE ANTI-IA -->
@@ -323,7 +340,17 @@
     let pasteCount = 0;
     let pasteDetailsArr = [];
 
-    // --- OBTENER IP PÚBLICA DEL ESTUDIANTE Y GENERAR MARCA DE AGUA ---
+    // --- PARPADEO FRECUENCIAL ANTI-CÁMARA DE CELULAR ---
+    let toggleFlicker = false;
+    function antiCameraFlicker() {
+      // Alterna imperceptiblemente el color de fondo para descalibrar el obturador del teléfono
+      document.body.style.backgroundColor = toggleFlicker ? "#eef2f5" : "#ebf0f3";
+      toggleFlicker = !toggleFlicker;
+      requestAnimationFrame(antiCameraFlicker);
+    }
+    antiCameraFlicker();
+
+    // --- OBTENER IP PÚBLICA DEL ESTUDIANTE Y ACTUALIZAR MARCA DE AGUA ---
     fetch('https://api.ipify.org?format=json')
       .then(res => res.json())
       .then(data => {
@@ -342,7 +369,6 @@
       
       const watermarkText = `${name} • IP: ${userIP}`;
       
-      // Multiplica el texto para cubrir toda la pantalla en rejilla
       overlay.innerHTML = "";
       for (let i = 0; i < 30; i++) {
         const item = document.createElement("div");
